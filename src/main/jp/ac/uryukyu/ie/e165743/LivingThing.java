@@ -8,10 +8,10 @@ package jp.ac.uryukyu.ie.e165743;
  *  * Created by tnal on 2016/11/13.
  */
 public class LivingThing { /**privateのPは大文字ではない*/
-String name;
-    int hitPoint;
-    int attack;
-    boolean dead;
+    private String name;
+    private int hitPoint;
+    private int attack;
+    private boolean dead;
     /**
      * * コンストラクタ。名前、最大HP、攻撃力を指定する。
      * * @param name ヒーロー名
@@ -20,7 +20,7 @@ String name;
      */
     public LivingThing (String name, int maximumHP, int attack) {
         this.name = name;
-        this.hitPoint = maximumHP;
+        hitPoint = maximumHP;
         this.attack = attack;
         dead = false;
         System.out.printf("%sのHPは%d。攻撃力は%dです。\n", name, maximumHP, attack);
@@ -35,15 +35,35 @@ String name;
     public String getName(){
         return name;
     }
+
+    public int getHitPoint() { return hitPoint; }
+    public int getAttack() { return attack; }
+    public boolean getDead() { return dead; }
+    public void setName( String name ) {
+        this.name = name;
+    }
+    public void setDead( boolean dead) {
+        this.dead = dead;
+    }
+    public void sethiPoint(int hitPoint) {
+        this.hitPoint = hitPoint;
+    }
+    public void setAttack(int attack){
+        this.attack = attack;
+    }
+
     /**
      * * Enemyへ攻撃するメソッド。
      * * attackに応じて乱数でダメージを算出し、hero.wounded()によりダメージ処理を実行。
      * * @param e 攻撃対象
      */
-    public void attack(LivingThing e){
-        int damage = (int)(Math.random() * attack);
-        System.out.printf("%sの攻撃！%sに%dのダメージを与えた！！\n", name, e.getName(), damage);
-        e.wounded(damage);
+    public void attack(LivingThing opponent) {
+        if (dead == false) {
+            int damage = (int) (Math.random() * attack);
+            System.out.printf("%sの攻撃！%sに%dのダメージを与えた！！\n", name, opponent.getName(), damage);
+            opponent.wounded(damage);
+        }
+
     }
     /**
      * * 自身へ攻撃されたときのダメージ処理をするメソッド。
